@@ -4,8 +4,6 @@
 #include <QtCore>
 #include <QtWidgets>
 
-#include "shape.h"
-
 class Tool
 {
 private:
@@ -19,6 +17,9 @@ public:
     virtual void onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event){};
     virtual void onKeyPress(QGraphicsScene* canvas, QKeyEvent *keyEvent){};
     virtual void onKeyRelease(QGraphicsScene* canvas, QKeyEvent *keyEvent){};
+    virtual void onDragEnter(QGraphicsScene* canvas, QGraphicsSceneDragDropEvent *event){};
+    virtual void onDragLeave(QGraphicsScene* canvas, QGraphicsSceneDragDropEvent *event){};
+    virtual void onDragMove(QGraphicsScene* canvas, QGraphicsSceneDragDropEvent *event){};
 
     QString getName();
     QString getHotKey();
@@ -31,6 +32,20 @@ private:
 
 public:
     SelectTool();
+
+    void onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+    void onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+    void onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+};
+
+class MoveTool : public Tool
+{
+private:
+    QPointF begin;
+    bool isPressed = false;
+
+public:
+    MoveTool();
 
     void onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
     void onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;

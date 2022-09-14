@@ -19,13 +19,11 @@ SOURCES += \
     canvas.cpp \
     main.cpp \
     editor.cpp \
-    shape.cpp \
     tool.cpp
 
 HEADERS += \
     canvas.h \
     editor.h \
-    shape.h \
     tool.h
 
 # Default rules for deployment.

@@ -16,6 +16,7 @@ void Canvas::removeSelectedItems()
     for(auto obj : items)
     {
         removeItem(obj);
+        delete obj;
     }
 }
 

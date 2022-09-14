@@ -10,9 +10,10 @@ class Canvas : public QGraphicsScene
 private:
     Tool* _current_tool = nullptr;
 
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
     void keyPressEvent(QKeyEvent *keyEvent);
     void keyReleaseEvent(QKeyEvent *keyEvent);
 

@@ -40,6 +40,43 @@ void SelectTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* e
 
 }
 
+MoveTool::MoveTool() : Tool("Move", "G")
+{
+
+}
+
+void MoveTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+    begin = event->scenePos();
+    isPressed = true;
+
+    QRectF rect = QRectF(begin.x(), begin.y(), 1, 1);
+    QPainterPath path;
+    path.addRect(rect);
+    canvas->setSelectionArea(path);
+};
+
+void MoveTool::onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+    isPressed = false;
+};
+
+void MoveTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+    if(isPressed)
+    {
+        QPointF pos = event->scenePos();
+        QPointF delta = pos - begin;
+
+        auto items = canvas->selectedItems();
+        for(auto obj : items)
+        {
+            obj->moveBy(delta.x(), delta.y());
+        }
+        begin = pos;
+    }
+};
+
 // RectTool --------------------------------------------- //
 RectTool::RectTool() : Tool("Rect", "R")
 {
