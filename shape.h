@@ -4,9 +4,6 @@
 #include <QtCore>
 #include <QtWidgets>
 
-
-
-template<class T>
 class Shape
 {
 public:
@@ -18,21 +15,20 @@ public:
     };
 
 protected:
-    T* _item;
+    QGraphicsItem* _item;
     Type _type;
 
 public:
     Shape(Type type);
 
     void setPosition(QPointF pos);
-    void setScale(QSizeF size);
     void setRotation(qreal rotation);
 
-    T* getItem();
+    QGraphicsItem* getItem();
 };
 
 // Rect shape
-class RectShape : public Shape<QGraphicsRectItem>
+class RectShape : public Shape
 {
 public:
     RectShape(QPointF pos = QPointF(0, 0), QSizeF size = QSizeF(100, 100));

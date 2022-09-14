@@ -1,31 +1,21 @@
 #include "shape.h"
 
-template<class T>
-Shape<T>::Shape(Type type)
+Shape::Shape(Type type)
 {
     _type = type;
 }
 
-template<class T>
-void Shape<T>::setPosition(QPointF pos)
+void Shape::setPosition(QPointF pos)
 {
     _item->setPos(pos);
 }
 
-template<class T>
-void Shape<T>::setScale(QSizeF scale)
-{
-    _item->setScale(scale);
-}
-
-template<class T>
-void Shape<T>::setRotation(qreal rotation)
+void Shape::setRotation(qreal rotation)
 {
     _item->setRotation(rotation);
 }
 
-template<class T>
-T* Shape<T>::getItem()
+QGraphicsItem* Shape::getItem()
 {
     return _item;
 }
@@ -38,5 +28,5 @@ RectShape::RectShape(QPointF pos, QSizeF size) : Shape(Type::Rect)
 
 void RectShape::setRect(QRectF rect)
 {
-    _item->setRect(rect);
+    dynamic_cast<QGraphicsRectItem*>(_item)->setRect(rect);
 }

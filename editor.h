@@ -2,6 +2,7 @@
 #define EDITOR_H
 
 #include "canvas.h"
+#include "tool.h"
 
 class Editor : public QMainWindow
 {
@@ -11,6 +12,7 @@ private:
     QGraphicsView* canvas_widget;
     Canvas* canvas;
     QToolBar* tool_bar;
+    QMap<QString, QVector<Tool*>> _tools;
 
 private slots:
     void selectRectTool();

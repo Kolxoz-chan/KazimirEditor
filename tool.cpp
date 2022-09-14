@@ -1,13 +1,49 @@
 #include "tool.h"
 
-Tool::Tool(QString name, QString description)
+Tool::Tool(QString name, QString hot_key)
 {
     _name = name;
-    _description = description;
+    _hot_key = hot_key;
+}
+
+QString Tool::getName()
+{
+    return _name;
+}
+
+QString Tool::getHotKey()
+{
+    return _hot_key;
+}
+
+SelectTool::SelectTool() : Tool("Select", "S")
+{
+
+}
+
+void SelectTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+    begin = event->pos();
+}
+
+void SelectTool::onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+    QPointF pos = event->pos();
+    QPainterPath path;
+    path.addRect(begin.x(), begin.y(), pos.x() - begin.x(), pos.y() - begin.y());
+    qDebug() << path;
+    canvas->setSelectionArea(path);
+
+
+}
+
+void SelectTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+
 }
 
 // RectTool --------------------------------------------- //
-RectTool::RectTool() : Tool("Rect tool", "")
+RectTool::RectTool() : Tool("Rect", "R")
 {
 
 }
@@ -39,7 +75,7 @@ void RectTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* eve
 }
 
 // RectTool --------------------------------------------- //
-EllipseTool::EllipseTool() : Tool("Ellipse tool", "")
+EllipseTool::EllipseTool() : Tool("Ellipse", "E")
 {
 
 }
@@ -71,7 +107,7 @@ void EllipseTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* 
 }
 
 // PolygonTool
-PolygonTool::PolygonTool() : Tool("Polygon", "")
+PolygonTool::PolygonTool() : Tool("Polygon", "P")
 {
 
 }

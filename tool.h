@@ -9,16 +9,32 @@
 class Tool
 {
 private:
-    QString _name, _description;
+    QString _name, _hot_key;
 
 public:
-    Tool(QString _name, QString _description);
+    Tool(QString _name, QString _hot_key);
 
     virtual void onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event){};
     virtual void onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event){};
     virtual void onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event){};
     virtual void onKeyPress(QGraphicsScene* canvas, QKeyEvent *keyEvent){};
     virtual void onKeyRelease(QGraphicsScene* canvas, QKeyEvent *keyEvent){};
+
+    QString getName();
+    QString getHotKey();
+};
+
+class SelectTool : public Tool
+{
+private:
+    QPointF begin;
+
+public:
+    SelectTool();
+
+    void onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+    void onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+    void onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
 };
 
 class RectTool : public Tool
