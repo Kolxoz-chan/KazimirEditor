@@ -10,6 +10,15 @@ void Canvas::setCurrentTool(Tool* tool)
     _current_tool = tool;
 }
 
+void Canvas::removeSelectedItems()
+{
+    auto items = selectedItems();
+    for(auto obj : items)
+    {
+        removeItem(obj);
+    }
+}
+
 void Canvas::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(_current_tool)

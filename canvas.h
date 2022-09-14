@@ -9,7 +9,6 @@ class Canvas : public QGraphicsScene
 {
 private:
     Tool* _current_tool = nullptr;
-    QGraphicsItem* _current_item = nullptr;
 
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
@@ -21,6 +20,8 @@ public:
     Canvas();
 
     void setCurrentTool(Tool* tool);
+
+    void removeSelectedItems();
 };
 
 #endif // CANVAS_H

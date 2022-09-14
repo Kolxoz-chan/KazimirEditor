@@ -23,18 +23,16 @@ SelectTool::SelectTool() : Tool("Select", "S")
 
 void SelectTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
 {
-    begin = event->pos();
+    begin = event->scenePos();
 }
 
 void SelectTool::onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
 {
-    QPointF pos = event->pos();
+    QPointF pos = event->scenePos();
+    QRectF rect = QRectF(begin.x(), begin.y(), pos.x() - begin.x()+1, pos.y() - begin.y()+1);
     QPainterPath path;
-    path.addRect(begin.x(), begin.y(), pos.x() - begin.x(), pos.y() - begin.y());
-    qDebug() << path;
+    path.addRect(rect);
     canvas->setSelectionArea(path);
-
-
 }
 
 void SelectTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
@@ -54,6 +52,7 @@ void RectTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* ev
     QSizeF size = QSizeF(1, 1);
     QRectF rect = QRectF(begin, size);
     _rect_item = canvas->addRect(rect);
+    _rect_item->setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 void RectTool::onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
@@ -86,6 +85,7 @@ void EllipseTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent*
     QSizeF size = QSizeF(1, 1);
     QRectF rect = QRectF(begin, size);
     _rect_item = canvas->addEllipse(rect);
+    _rect_item->setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 void EllipseTool::onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
@@ -125,6 +125,7 @@ void PolygonTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent*
         _path = QPainterPath(pos);
         _path.lineTo(pos + QPointF(1, 1));
         _polygon_item = canvas->addPath(_path);
+        _polygon_item->setFlag(QGraphicsItem::ItemIsSelectable);
     }
 }
 

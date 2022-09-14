@@ -14,11 +14,6 @@ private:
     QToolBar* tool_bar;
     QMap<QString, QVector<Tool*>> _tools;
 
-private slots:
-    void selectRectTool();
-    void selectEllipseTool();
-    void selectPolygonTool();
-
 public:
     Editor(QWidget *parent = nullptr);
     ~Editor();
