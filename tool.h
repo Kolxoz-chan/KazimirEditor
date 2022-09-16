@@ -56,6 +56,7 @@ public:
 class RotateTool : public Tool
 {
 private:
+    qreal last_angle;
     QPointF begin;
     bool isPressed = false;
 
@@ -65,6 +66,8 @@ public:
     void onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
     void onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
     void onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+
+    qreal getDirectionAngle(QPointF a, QPointF b);
 };
 
 class RectTool : public Tool

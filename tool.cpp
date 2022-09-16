@@ -71,7 +71,13 @@ void MoveTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* eve
         auto items = canvas->selectedItems();
         for(auto obj : items)
         {
-            obj->moveBy(delta.x(), delta.y());
+            QTransform t;
+
+            t.rotate(obj->transform().m11());
+            t.translate(delta.x(), delta.y());
+            t.rotate(obj->rotation());
+
+            obj->setTransform(t, true);
         }
         begin = pos;
     }
@@ -81,6 +87,13 @@ void MoveTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* eve
 RotateTool::RotateTool() : Tool("Rotate", "T")
 {
 
+}
+
+qreal RotateTool::getDirectionAngle(QPointF a, QPointF b)
+{
+    QPointF delta = b-a;
+    delta /= (delta.x() + delta.y());
+    return atan2(delta.y(), delta.x()) * 180 / M_PI;
 }
 
 void RotateTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
@@ -93,6 +106,7 @@ void RotateTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* 
         bounding_rect |= items[i]->boundingRect();
     }
     begin = bounding_rect.center();
+    last_angle = getDirectionAngle(begin, event->scenePos());
 };
 
 void RotateTool::onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
@@ -102,12 +116,24 @@ void RotateTool::onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent
 
 void RotateTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
 {
-    QPointF pos = event->scenePos();
     if(isPressed)
     {
-        QPointF delta = pos-begin;
-        delta /= (delta.x() + delta.y());
-        qDebug() << atan2(delta.y(), delta.x()) * 180 / M_PI;
+        QPointF pos = event->scenePos();
+        qreal angle = getDirectionAngle(begin, pos);
+        qreal delta = angle - last_angle;
+
+        QTransform t;
+        t.translate(begin.x(), begin.y());
+        t.rotate(delta);
+        t.translate(-begin.x(), -begin.y());
+
+        auto items = canvas->selectedItems();
+        for(int i=0; i<items.size(); i++)
+        {
+            items[i]->setTransform(t, true);
+        }
+
+        last_angle = angle;
     }
 };
 
