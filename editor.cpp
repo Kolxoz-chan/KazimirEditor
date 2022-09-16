@@ -25,6 +25,7 @@ Editor::Editor(QWidget *parent) : QMainWindow(parent)
     // Transformations tools
     _tools["Transformations"] += new SelectTool();
     _tools["Transformations"] += new MoveTool();
+    _tools["Transformations"] += new RotateTool();
 
     // Primitives tools
     _tools["Primitives"] += new RectTool();

@@ -77,6 +77,40 @@ void MoveTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* eve
     }
 };
 
+// RotateTool --------------------------------------------- //
+RotateTool::RotateTool() : Tool("Rotate", "T")
+{
+
+}
+
+void RotateTool::onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+    isPressed = true;
+    QRectF bounding_rect;
+    auto items = canvas->selectedItems();
+    for(int i=0; i<items.size(); i++)
+    {
+        bounding_rect |= items[i]->boundingRect();
+    }
+    begin = bounding_rect.center();
+};
+
+void RotateTool::onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+    isPressed = false;
+};
+
+void RotateTool::onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event)
+{
+    QPointF pos = event->scenePos();
+    if(isPressed)
+    {
+        QPointF delta = pos-begin;
+        delta /= (delta.x() + delta.y());
+        qDebug() << atan2(delta.y(), delta.x()) * 180 / M_PI;
+    }
+};
+
 // RectTool --------------------------------------------- //
 RectTool::RectTool() : Tool("Rect", "R")
 {

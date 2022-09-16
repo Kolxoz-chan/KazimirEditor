@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QtWidgets>
+#include <cmath>
 
 class Tool
 {
@@ -46,6 +47,20 @@ private:
 
 public:
     MoveTool();
+
+    void onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+    void onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+    void onMouseMove(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
+};
+
+class RotateTool : public Tool
+{
+private:
+    QPointF begin;
+    bool isPressed = false;
+
+public:
+    RotateTool();
 
     void onMousePress(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
     void onMouseRelease(QGraphicsScene* canvas, QGraphicsSceneMouseEvent* event) override;
